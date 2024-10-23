@@ -1,0 +1,9 @@
+alten-project-ui/node_modules
+alten-project-ui/.idea
+alten-project-ui/dist
+
+alten-project-api/.idea
+alten-project-api/.gradle
+alten-project-api/build
+alten-project-api/buildSrc/build
+alten-project-api/buildSrc/.gradle

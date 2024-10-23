@@ -1,0 +1,71 @@
+plugins {
+	id 'java'
+	id 'org.springframework.boot' version '3.3.4'
+	id 'io.spring.dependency-management' version '1.1.6'
+	id 'org.hidetake.swagger.generator' version '2.19.2'
+}
+
+group = 'com.alten'
+version = '0.0.1-SNAPSHOT'
+
+java {
+	toolchain {
+		languageVersion = JavaLanguageVersion.of(21)
+	}
+}
+
+sourceSets {
+	main {
+		java.srcDir("${buildDir}/generated/src/main/java")
+	}
+}
+
+configurations {
+	compileOnly {
+		extendsFrom annotationProcessor
+	}
+}
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	implementation 'org.flywaydb:flyway-core'
+	implementation 'io.swagger.core.v3:swagger-core:2.2.25'
+	implementation 'io.swagger.core.v3:swagger-annotations:2.2.25'
+	swaggerCodegen 'io.swagger.codegen.v3:swagger-codegen-cli:3.0.52'
+
+	compileOnly 'org.projectlombok:lombok'
+	runtimeOnly 'com.h2database:h2'
+	annotationProcessor 'org.projectlombok:lombok'
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+}
+
+tasks.named('test') {
+	useJUnitPlatform()
+}
+
+swaggerSources {
+	products {
+		inputFile = file("$rootDir/schemas/api/v1/alten.yaml")
+		code {
+			language = 'spring'
+			outputDir = file("$buildDir/generated")
+			configFile = file("$rootDir/schemas/api/config.json")
+			additionalProperties = [
+					"interfaceOnly":true,
+					"hideGenerationTimestamp": true,
+					"jakarta":true,
+					"useBeanValidation":true,
+					"dateLibrary": "java8",
+					"java21":true
+			]
+		}
+	}
+}
+
+compileJava.dependsOn("generateSwaggerCode")

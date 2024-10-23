@@ -1,0 +1,338 @@
+openapi: 3.0.0
+info:
+  description: Alten Project Api Documentation
+  version: 0.1.0
+  title: Alten Project Api Documentation
+  termsOfService: urn:tos
+  contact: {}
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0
+tags:
+  - name: Product
+  - name: Basket
+servers:
+  - url: http://localhost:8080
+
+paths:
+  # PRODUCT
+  /v1/products:
+    get:
+      tags:
+        - Product
+      summary: List Products
+      operationId: listProducts
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/ProductApiResponse"
+
+    post:
+      tags:
+        - Product
+      summary: createProduct
+      operationId: createProduct
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              $ref: "#/components/schemas/ProductCreateApiRequest"
+      responses:
+        201:
+          description: CREATED
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ProductApiResponse"
+
+
+  /v1/products/{id}:
+    get:
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+            format: int64
+      tags:
+        - Product
+      summary: Get Product
+      operationId: getProduct
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ProductApiResponse"
+
+    patch:
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+            format: int64
+      tags:
+        - Product
+      summary: Patch Product
+      operationId: patchProduct
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              $ref: "#/components/schemas/ProductPatchApiRequest"
+      responses:
+        201:
+          description: PATCHED
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ProductApiResponse"
+
+    delete:
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+            format: int64
+      tags:
+        - Product
+      summary: Delete Product
+      operationId: deleteProduct
+      responses:
+        204:
+          description: NO_CONTENT
+
+  # BASKET
+  /v1/baskets/{id}/items:
+    get:
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+      tags:
+        - Basket
+      summary: List Basket Items
+      operationId: listBasketItems
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BasketItemsApiResponse"
+
+    put:
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+      tags:
+        - Basket
+      summary: Update Basket items
+      operationId: updateBasketItems
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/BasketUpdateItemsApiRequest"
+      responses:
+        201:
+          description: Updated
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BasketItemsApiResponse"
+
+    delete:
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+      tags:
+        - Basket
+      summary: Delete Basket Items
+      operationId: deleteBasketItems
+      responses:
+        204:
+          description: NO_CONTENT
+
+    post:
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+      tags:
+        - Basket
+      summary: Purchase Basket Items
+      operationId: purchaseBasketItems
+      responses:
+        204:
+          description: NO_CONTENT
+
+
+components:
+  schemas:
+    # Requests
+    ProductCreateApiRequest:
+      type: object
+      properties:
+        code:
+          type: string
+        name:
+          type: string
+        image:
+          type: string
+          format: binary
+        category:
+          type: string
+        price:
+          type: string
+        quantity:
+          type: string
+        internalReference:
+          type: string
+        shelfId:
+          type: string
+        rating:
+          type: string
+      required:
+        - code
+        - name
+        - category
+        - price
+        - quantity
+        - rating
+
+    ProductPatchApiRequest:
+      type: object
+      properties:
+        code:
+          type: string
+        name:
+          type: string
+        image:
+          type: string
+          format: binary
+        category:
+          type: string
+        price:
+          type: string
+        quantity:
+          type: string
+        internalReference:
+          type: string
+        shelfId:
+          type: string
+        rating:
+          type: string
+
+    BasketUpdateItemsApiRequest:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: "#/components/schemas/BasketItemApiRequest"
+
+    BasketItemApiRequest:
+      type: object
+      properties:
+        productId:
+          type: integer
+          format: int64
+        quantity:
+          type: integer
+          format: int64
+
+
+    # Responses
+    ProductApiResponse:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        code:
+          type: string
+        name:
+          type: string
+        image:
+          type: string
+        category:
+          type: string
+        price:
+          type: number
+          format: double
+        quantity:
+          type: integer
+          format: int64
+        internalReference:
+          type: string
+        shelfId:
+          type: string
+        inventoryStatus:
+          type: string
+        rating:
+          type: integer
+          format: int64
+        createdAt:
+          type: integer
+          format: int64
+        updatedAt:
+          type: integer
+          format: int64
+
+    BasketItemsApiResponse:
+      type: object
+      properties:
+        createdAt:
+          type: integer
+          format: int64
+        updatedAt:
+          type: integer
+          format: int64
+        id:
+          type: string
+        items:
+          type: array
+          items:
+            $ref: "#/components/schemas/BasketItemApiResponse"
+
+    BasketItemApiResponse:
+      type: object
+      properties:
+        productId:
+          type: integer
+          format: int64
+        quantity:
+          type: integer
+          format: int64
+
+
+    # Common
+    CommonMap:
+      type: object
+      additionalProperties:
+        type: object
+    NotBlankString:
+      type: string
+      pattern: ^(?!\s*$).+
