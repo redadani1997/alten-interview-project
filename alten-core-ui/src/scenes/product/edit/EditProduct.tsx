@@ -1,7 +1,7 @@
 import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 import { ReduxStore } from 'redux_config/reducers';
 import { IProduct } from '../redux';
-import productActions, { IProductRequest } from '../redux/actions';
+import productActions, { IProductPatchRequest } from '../redux/actions';
 import EditProductComponent from './EditProductComponent';
 
 interface EditProductProps {
@@ -27,9 +27,13 @@ const EditProduct = ({
     // Map Dispatch To Props
     const dispatch = useDispatch<any>();
 
-    const patchProduct = (request: IProductRequest): Promise<any> =>
+    const patchProduct = (request: IProductPatchRequest): Promise<any> =>
         dispatch(
-            productActions.patchProduct(1, productToEdit?.code, request),
+            productActions.patchProduct(
+                productToEdit?.id,
+                productToEdit?.code,
+                request,
+            ),
         ).then(() => {
             setIsModalOpen(false);
             onSuccess();

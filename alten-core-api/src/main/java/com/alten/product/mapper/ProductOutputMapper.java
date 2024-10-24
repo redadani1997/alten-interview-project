@@ -11,6 +11,7 @@ public class ProductOutputMapper {
         response.setId(productModel.getId());
         response.setCode(productModel.getCode());
         response.setName(productModel.getName());
+        response.setDescription(productModel.getDescription());
         response.setImage(productModel.getImage());
         response.setCategory(productModel.getCategory());
         response.setPrice(productModel.getPrice());

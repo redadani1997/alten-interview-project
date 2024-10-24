@@ -18,6 +18,7 @@ public class ProductModel {
 
     private String code;
     private String name;
+    private String description;
     private String image;
     private String category;
     private Double price;

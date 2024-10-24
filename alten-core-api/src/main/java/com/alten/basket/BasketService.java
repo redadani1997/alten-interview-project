@@ -60,13 +60,15 @@ public class BasketService {
     }
 
     private BasketModel getBasketOrElseInit(String id, Long now) {
-        return repository.findById(id).orElse(
-            BasketModel.builder()
-                    .id(UUID.randomUUID().toString())
-                    .items("[]")
-                    .createdAt(now)
-                    .updatedAt(now)
-                    .build()
+        return repository.findById(id).orElseGet(() -> {
+                BasketModel basketModel = BasketModel.builder()
+                        .id(UUID.randomUUID().toString())
+                        .items("[]")
+                        .createdAt(now)
+                        .updatedAt(now)
+                        .build();
+                return repository.save(basketModel);
+                }
         );
     }
 

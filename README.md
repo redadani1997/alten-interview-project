@@ -13,6 +13,7 @@ The utilized stack is:
 - Users can view products and add them to their cart.
 - Users can update/delete products from their cart.
 - Users can purchase items from their cart *(will also update product quantity)*
+- Basket is persisted in the browser's local storage, and restored on page reload.
 - Users can contact support.
 
 ## Architecture

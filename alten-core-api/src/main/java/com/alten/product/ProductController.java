@@ -20,8 +20,8 @@ public class ProductController implements ProductApi {
     private final ProductInputMapper mapper;
 
     @Override
-    public ResponseEntity<ProductApiResponse> createProduct(String code, String name, MultipartFile image, String category, String price, String quantity, String internalReference, String shelfId, String rating) {
-        ProductCreateRequest request = mapper.productCreateRequest(code, name, image, category, price, quantity, internalReference, shelfId, rating);
+    public ResponseEntity<ProductApiResponse> createProduct(String code, String name, String description, MultipartFile image, String category, String price, String quantity, String internalReference, String shelfId, String rating) {
+        ProductCreateRequest request = mapper.productCreateRequest(code, name, description, image, category, price, quantity, internalReference, shelfId, rating);
         ProductApiResponse response = service.create(request);
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
@@ -45,8 +45,8 @@ public class ProductController implements ProductApi {
     }
 
     @Override
-    public ResponseEntity<ProductApiResponse> patchProduct(Long id, String code, String name, MultipartFile image, String category, String price, String quantity, String internalReference, String shelfId, String rating) {
-        ProductPatchRequest request = mapper.productPatchRequest(id, code, name, image, category, price, quantity, internalReference, shelfId, rating);
+    public ResponseEntity<ProductApiResponse> patchProduct(Long id, String code, String name, String description, MultipartFile image, String category, String price, String quantity, String internalReference, String shelfId, String rating) {
+        ProductPatchRequest request = mapper.productPatchRequest(id, code, name, description, image, category, price, quantity, internalReference, shelfId, rating);
         ProductApiResponse response = service.patch(request);
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }

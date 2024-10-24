@@ -24,6 +24,7 @@ public class ProductService {
                 .builder()
                 .code(request.code())
                 .name(request.name())
+                .description(request.description())
                 .image(request.image())
                 .category(request.category())
                 .price(request.price())
@@ -47,6 +48,9 @@ public class ProductService {
         }
         if(request.name() != null && !request.name().isBlank()) {
             product.setName(request.name());
+        }
+        if(request.description() != null && !request.description().isBlank()) {
+            product.setDescription(request.description());
         }
         if(request.image() != null && !request.image().isBlank()) {
             product.setImage(request.image());
@@ -77,7 +81,7 @@ public class ProductService {
     public void purchaseProduct(Long productId, Long quantity) {
         ProductModel product = getByIdOrThrow(productId);
         if (product.getQuantity() < quantity) {
-            throw new ProductValidationException("Not enough stock for product" + product.getName());
+            throw new ProductValidationException("Not enough stock for product: " + product.getName());
         }
         product.setQuantity(product.getQuantity() - quantity);
         product.setInventoryStatus(computeInventoryStatus(product.getQuantity()));

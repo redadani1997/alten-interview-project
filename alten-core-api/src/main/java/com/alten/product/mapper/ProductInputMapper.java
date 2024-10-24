@@ -11,12 +11,14 @@ import java.util.Base64;
 @Service
 public class ProductInputMapper {
 
-    public ProductCreateRequest productCreateRequest(String code, String name, MultipartFile image,
+    public ProductCreateRequest productCreateRequest(String code, String name, String description,
+                                                     MultipartFile image,
                                                      String category, String price, String quantity,
                                                      String internalReference, String shelfId,
                                                      String rating) {
         assertNotBlank("Code", code);
         assertNotBlank("Name", name);
+        assertNotBlank("Description", description);
         assertNotNegative("Price", doCastToDouble("Price", price));
         assertNotNegative("Quantity", Long.valueOf(quantity));
         assertNotBlank("Category", category);
@@ -29,6 +31,7 @@ public class ProductInputMapper {
         return new ProductCreateRequest(
             code,
             name,
+            description,
             base64Image,
             category,
             doCastToDouble("Price", price),
@@ -39,7 +42,7 @@ public class ProductInputMapper {
         );
     }
 
-    public ProductPatchRequest productPatchRequest(Long id, String code, String name,
+    public ProductPatchRequest productPatchRequest(Long id, String code, String name, String description,
                                                    MultipartFile image, String category,
                                                    String price, String quantity,
                                                    String internalReference, String shelfId,
@@ -52,6 +55,7 @@ public class ProductInputMapper {
                 id,
                 code,
                 name,
+                description,
                 base64Image,
                 category,
                 doCastToDouble("Price", price),

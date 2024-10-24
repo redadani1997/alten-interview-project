@@ -196,7 +196,12 @@ function renderModalFooter(
         !product.description ||
         !product.category ||
         !product.price ||
-        !product.quantity ||
+        product.quantity === null ||
+        product.quantity === undefined ||
+        product.quantity < 0 ||
+        product.price === null ||
+        product.price === undefined ||
+        product.price < 0 ||
         !product.shelfId ||
         !product.internalReference ||
         !product.rating;

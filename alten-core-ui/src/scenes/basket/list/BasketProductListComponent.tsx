@@ -24,7 +24,6 @@ function BasketProductListComponent({
     }, [basket]);
 
     useEffect(() => {
-        console.log('basketItems', basketItems);
         if (basketItems.id) {
             updateBasket(basketItems.id, basketItems);
         }

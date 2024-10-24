@@ -2,6 +2,7 @@ CREATE TABLE products (
     id BIGINT NOT NULL AUTO_INCREMENT,
     code TEXT,
     name TEXT,
+    description TEXT,
     image TEXT,
     category TEXT,
     price DOUBLE PRECISION,

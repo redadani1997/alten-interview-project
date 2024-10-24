@@ -199,6 +199,8 @@ components:
           type: string
         name:
           type: string
+        description:
+          type: string
         image:
           type: string
           format: binary
@@ -228,6 +230,8 @@ components:
         code:
           type: string
         name:
+          type: string
+        description:
           type: string
         image:
           type: string
@@ -274,6 +278,8 @@ components:
         code:
           type: string
         name:
+          type: string
+        description:
           type: string
         image:
           type: string

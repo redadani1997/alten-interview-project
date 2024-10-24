@@ -82,6 +82,7 @@ function renderModalBody(
                                     });
                                 }}
                                 min={1}
+                                max={product.quantity}
                                 value={item.quantity}
                             />
                         </Grid.Col>
@@ -119,7 +120,7 @@ function renderModalBody(
                 Total quantity: <b>{totalQuantity}</b>
             </Text>
             <Text className="pb-2">
-                Total amount: <b>{totalAmount}</b>
+                Total amount: <b>{totalAmount} €</b>
             </Text>
         </div>
     );
@@ -143,7 +144,7 @@ function renderModalFooter(
                 Delete
             </Button>
             <Button
-                color="pink"
+                color="blue"
                 leftIcon={<IoMdBasket size="1rem" />}
                 onClick={() => purchaseBasket()}
                 disabled={disabled}
